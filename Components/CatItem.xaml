@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CatApp.Components.CatItem">
     
-    <VerticalStackLayout>
-        <ImageButton x:Name="CatPreviewImage" Source="{Binding ImageUrl}" Clicked="OnClick"/>
-    </VerticalStackLayout>
+    <HorizontalStackLayout>
+        <ImageButton x:Name="CatPreviewImage" Source="{Binding Cat.url}" Clicked="OnClick"/>
+        <Label Text="{Binding CatName}" />
+    </HorizontalStackLayout>
 </ContentView>

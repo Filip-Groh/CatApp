@@ -1,22 +1,25 @@
 namespace CatApp.Components {
     public partial class CatItem : ContentView {
-        public string ImageUrl { get; private set; }
-        public string CatId { get; private set; }
-        public int CatWidth { get; private set; }
-        public int CatHeight { get; private set; }
+        public Cat Cat { get; init; }
         public float AspectRatio {
             get {
-                return CatWidth / CatHeight;
+                return Cat.width/ Cat.height;
             }
         }
 
-        public CatItem(string Id, string url, int width, int height) {
+        public string CatName {
+            get {
+                if (Cat.breeds == null || Cat.breeds[0].name == null)
+                    return "Unnamed";
+
+                return Cat.breeds[0].name!;
+            }
+        }
+
+        public CatItem(Cat cat) {
             InitializeComponent();
 
-            CatId = Id;
-            ImageUrl = url;
-            CatWidth = width;
-            CatHeight = height;
+            Cat = cat;
 
             BindingContext = this;
 
@@ -24,7 +27,7 @@ namespace CatApp.Components {
         }
 
         public async void OnClick(object sender, EventArgs e) {
-            await Navigation.PushAsync(new DetailPage(CatId));
+            await Navigation.PushAsync(new DetailPage(Cat));
         }
     }
 }

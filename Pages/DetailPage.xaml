@@ -4,9 +4,12 @@
              x:Class="CatApp.DetailPage"
              Title="Detail">
     <VerticalStackLayout>
-        <Label 
-            Text="{Binding CatId}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Text="{Binding Cat.id}" />
+        <Label Text="{Binding Cat.width}" />
+        <Label Text="{Binding Cat.height}" />
+        <Label Text="{Binding Cat.url}" />
+        <VerticalStackLayout x:Name="Breeds">
+            
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

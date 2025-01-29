@@ -21,10 +21,10 @@ namespace CatApp {
     }
 
     public class Cat {
-        public string? id { get; set; }
+        public required string id { get; set; }
         public int width { get; set; }
         public int height { get; set; }
-        public string? url { get; set; }
+        public required string url { get; set; }
         public List<Breed>? breeds { get; set; }
     }
 
@@ -55,7 +55,7 @@ namespace CatApp {
             return JsonSerializer.Serialize(obj, options);
         }
 
-        public async Task<List<Cat>?> GetCatsAsync(int limit, bool include_breeds, Size size) {
+        public async Task<List<Cat>?> GetCatsAsync(int limit, bool has_breeds, bool include_breeds, Size size) {
             string sizeParam = size switch {
                 Size.Thumb => "thumb",
                 Size.Small => "small",
@@ -64,7 +64,7 @@ namespace CatApp {
                 _ => ""
             };
 
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://api.thecatapi.com/v1/images/search?limit={limit}&size={sizeParam}&has_breeds={(include_breeds ? 1 : 0)}");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://api.thecatapi.com/v1/images/search?limit={limit}&size={sizeParam}&has_breeds={(has_breeds ? 1 : 0)}&include_breeds={(include_breeds ? 1 : 0)}");
             request.Headers.Add("x-api-key", "live_7F0IMZgDBdauHzOTSc22KQQbIiYqN12v3OYJgPd1HMkdU8VtMn4rvQtrIiwXrGSE");
 
             StringContent content = new StringContent(string.Empty);
@@ -77,6 +77,28 @@ namespace CatApp {
                 if (response.IsSuccessStatusCode) {
                     string data = await response.Content.ReadAsStringAsync();
                     return JsonSerializer.Deserialize<List<Cat>>(data, options);
+                }
+            } catch (Exception ex) {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+
+            return null;
+        }
+
+        public async Task<Cat?> GetCatAsync(string id) {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://api.thecatapi.com/v1/images/{id}?size=full");
+            request.Headers.Add("x-api-key", "live_7F0IMZgDBdauHzOTSc22KQQbIiYqN12v3OYJgPd1HMkdU8VtMn4rvQtrIiwXrGSE");
+
+            StringContent content = new StringContent(string.Empty);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            request.Content = content;
+
+            try {
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode) {
+                    string data = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<Cat>(data, options);
                 }
             } catch (Exception ex) {
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
