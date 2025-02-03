@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CatApp.Components.CatItem">
     
-    <HorizontalStackLayout>
-        <ImageButton x:Name="CatPreviewImage" Source="{Binding Cat.url}" Clicked="OnClick"/>
-        <Label Text="{Binding CatName}" />
+    <HorizontalStackLayout Spacing="8">
+        <HorizontalStackLayout.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnClick" />
+        </HorizontalStackLayout.GestureRecognizers>
+        <ImageButton Clicked="OnClick" x:Name="CatPreviewImage" Source="{Binding Cat.url}" Aspect="AspectFill" CornerRadius="8" />
+        <Label Text="{Binding CatName}" FontSize="Large" FontAttributes="Bold" VerticalTextAlignment="Center" />
     </HorizontalStackLayout>
 </ContentView>

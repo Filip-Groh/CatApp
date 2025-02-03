@@ -4,7 +4,11 @@
              x:Class="CatApp.MainPage">
 
     <ScrollView x:Name="InfiniteScroll" Scrolled="OnScroll">
-        <VerticalStackLayout x:Name="InfiniteScrollContent" />
+        <VerticalStackLayout>
+            <Label Text="The Cat App" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+            <VerticalStackLayout x:Name="InfiniteScrollContent" Padding="16" Spacing="8" />
+            <Label Text="Loading..." FontSize="Subtitle" HorizontalTextAlignment="Center" Padding="8" />
+        </VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>

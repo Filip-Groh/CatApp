@@ -9,7 +9,7 @@ namespace CatApp.Components {
 
         public string CatName {
             get {
-                if (Cat.breeds == null || Cat.breeds[0].name == null)
+                if (Cat.breeds == null || Cat.breeds.Count == 0 || Cat.breeds[0].name == null)
                     return "Unnamed";
 
                 return Cat.breeds[0].name!;
@@ -23,7 +23,8 @@ namespace CatApp.Components {
 
             BindingContext = this;
 
-            CatPreviewImage.MinimumHeightRequest = CatPreviewImage.Width * AspectRatio;
+            CatPreviewImage.WidthRequest = 150;
+            CatPreviewImage.HeightRequest = 150;
         }
 
         public async void OnClick(object sender, EventArgs e) {

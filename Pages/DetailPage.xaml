@@ -3,13 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CatApp.DetailPage"
              Title="Detail">
-    <VerticalStackLayout>
-        <Label Text="{Binding Cat.id}" />
-        <Label Text="{Binding Cat.width}" />
-        <Label Text="{Binding Cat.height}" />
-        <Label Text="{Binding Cat.url}" />
-        <VerticalStackLayout x:Name="Breeds">
-            
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="8">
+            <Label Text="{Binding CatName}" FontSize="Header" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+            <ImageButton Source="{Binding Cat.url}" CornerRadius="8" Clicked="OpenImage" />
+            <VerticalStackLayout>
+                <Label x:Name="LabelId" />
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="Image: " />
+                    <Label Text="{Binding Cat.url}" TextDecorations="Underline" TextColor="LightBlue" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OpenImage" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label x:Name="LabelImageSize" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+            <Label Text="Breed:" FontSize="Medium" />
+            <VerticalStackLayout x:Name="Breeds">
+
+            </VerticalStackLayout>
         </VerticalStackLayout>
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
